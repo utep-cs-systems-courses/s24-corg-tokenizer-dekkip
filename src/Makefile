@@ -1,14 +1,16 @@
 
-OBJS= tokenizer.o uimain.o history.o tester.o
+OBJS= tokenizer.o uimain.o history.o
 
-CFLAGS=-g -03
+CFLAGS=-g -O3
 
 all: tokens
 
 tokens: $(OBJS)
 	cc -o tokens $(CFLAGS) $(OBJS)
 
-$(OBJS): tokenizer.h history.h
+tokenizer.o: tokenizer.h
+history.o: history.h
+uimain.o: tokenizer.h history.h
 
 clean:
 	rm -f *.o tokens
