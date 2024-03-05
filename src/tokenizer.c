@@ -1,17 +1,19 @@
 #inlcude "tokenizer.h"
-#inlcude <ctype.h>
 
 int space_char(char c){
-  return isspace(c);
+  if(c == ' ')
+    return true;
+  return false;
 }
 
 int non_space_char(char c){
-  return !isspace(c);
+  return !space_char(c);
 }
 
-int *token_start(char *str){
-
-  return 0;
+char *token_start(char *str){
+  char *p = str;
+  p++;
+  return p;
 }
 
 char *token_terminator(char *token){
