@@ -61,7 +61,7 @@ char **tokenize(char* str){
       i++;
       token = token_start(terminator);
     }
-    //token[num_tokens] = NULL;
+    token[num_tokens] =
     return tokens;
 }
 
