@@ -32,9 +32,15 @@ int count_tokens(char *str){
   }
   int count = 0;
   for (int i = 0; i < length; i++){
-    if(space_char(str[i]))
-      count++;
+    printf("%c ", str[i]);
+    if(space_char(str[i])){
+      printf("space");
+      count +=1 ;
+      printf("%d", count);
+    }
   }
+  count += 1;
+  printf("this is %d", count);
   return count;
 }
 
