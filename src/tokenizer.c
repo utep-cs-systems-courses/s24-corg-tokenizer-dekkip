@@ -14,7 +14,9 @@ int non_space_char(char c){
 
 char *token_start(char *str){
   char *p = str;
-  p++;
+  while(space_char(*p)){
+      p++;
+    }
   return p;
 }
 
@@ -26,21 +28,20 @@ char *token_terminator(char *token){
 }
 
 int count_tokens(char *str){
-  int length = 0;
-  while (str[length] != '\0'){
-    length++;
-  }
   int count = 0;
-  for (int i = 0; i < length; i++){
-    printf("%c ", str[i]);
-    if(space_char(str[i])){
-      printf("space");
-      count +=1 ;
-      printf("%d", count);
+  char *pointer = str;
+  int i = 0;
+  printf("yesss");
+  while (*pointer != '\0'){
+    printf("/c ",*pointer);
+    pointer = token_start(pointer);
+    if(*pointer){
+      pointer = token_terminator(pointer);
+      count += 1;
+      printf("/d ", count);
     }
   }
-  count += 1;
-  printf("this is %d", count);
+  
   return count;
 }
 
@@ -89,4 +90,5 @@ void free_tokens(char **tokens){
     i++;
     token = tokens[i];
   }
+
 }
