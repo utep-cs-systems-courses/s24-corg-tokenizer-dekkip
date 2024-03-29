@@ -15,14 +15,14 @@ int non_space_char(char c){
 char *token_start(char *str){
   char *p = str;
   while(space_char(*p)){
-      p++;
+    p+=1;
     }
   return p;
 }
 
 char *token_terminator(char *token){
-  while((*token != ' ') || (*token != '\0')){
-    token++;
+  while(non_space_char(*token)){
+    token+= 1;
   }
   return token;
 }
@@ -30,18 +30,16 @@ char *token_terminator(char *token){
 int count_tokens(char *str){
   int count = 0;
   char *pointer = str;
-  int i = 0;
-  printf("yesss");
   while (*pointer != '\0'){
-    printf("/c ",*pointer);
     pointer = token_start(pointer);
     if(*pointer){
       pointer = token_terminator(pointer);
       count += 1;
-      printf("/d ", count);
     }
+    if(*pointer == '\0'){
+      break;
+    }   
   }
-  
   return count;
 }
 
@@ -56,9 +54,11 @@ char *copy_str(char *inStr, short len){
 
 char **tokenize(char* str){
     int num_tokens = count_tokens(str);
+    printf("%d ", num_tokens);
     char **tokens = (char**)malloc((num_tokens+1)*sizeof(char*));
     
     char *token = token_start(str);
+    // printf("%c", *token);
     int i = 0;
     while(token){
       char *terminator = token_terminator(token);
@@ -66,9 +66,13 @@ char **tokenize(char* str){
       tokens[i] = copy_str(token, token_length);
       tokens[i][token_length] = '\0';
       i++;
+      //printf("%c ",*token);
+      //printf("tokens %s ", *tokens[i]);
       token = token_start(terminator);
     }
-    //token[num_tokens] = NULL;
+
+    char* null = NULL;
+    tokens[num_tokens] = null;
     return tokens;
 }
 
