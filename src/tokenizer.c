@@ -1,6 +1,8 @@
+
 #include "tokenizer.h"
 #include <stdlib.h>
 #include <stdio.h>
+#include <ctype.h>
 
 int space_char(char c){
   if((c == ' ') || (c=='\t'))
@@ -32,14 +34,17 @@ int count_tokens(char *str){
   char *pointer = str;
   while (*pointer != '\0'){
     pointer = token_start(pointer);
+    if(*pointer == '\0' || !isalnum(*pointer)){
+      break;
+    }
+    //printf("token_start: %c\n", *pointer);
     if(*pointer){
       pointer = token_terminator(pointer);
+      // printf("token_terminator: %c\n", *pointer);
       count += 1;
     }
-    if(*pointer == '\0'){
-      break;
-    }   
   }
+  //printf("count: %d \n", count);
   return count;
 }
 
@@ -54,25 +59,28 @@ char *copy_str(char *inStr, short len){
 
 char **tokenize(char* str){
     int num_tokens = count_tokens(str);
-    printf("%d ", num_tokens);
-    char **tokens = (char**)malloc((num_tokens+1)*sizeof(char*));
+    //printf("num_tokens: %d\n", num_tokens);
     
+    char **tokens = (char**)malloc((num_tokens+1)*sizeof(char*));
     char *token = token_start(str);
-    // printf("%c", *token);
+    //printf("token: %c\n", *token);
     int i = 0;
-    while(token){
+    
+    while(*token != '\0'){
       char *terminator = token_terminator(token);
       size_t token_length = terminator - token;
       tokens[i] = copy_str(token, token_length);
       tokens[i][token_length] = '\0';
       i++;
-      //printf("%c ",*token);
-      //printf("tokens %s ", *tokens[i]);
+      // printf("token before: %c \n",*token);
+      //printf("tokens[i]: %s \n", *tokens[i]);
       token = token_start(terminator);
+      //printf("token after: %c\n", *token);
     }
 
     char* null = NULL;
     tokens[num_tokens] = null;
+    
     return tokens;
 }
 

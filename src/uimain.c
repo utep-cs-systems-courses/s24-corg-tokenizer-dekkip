@@ -12,6 +12,7 @@ int main(){
 
   // printf("count: %d \n", count_tokens(string));
   char** tokens = tokenize(string);
+  print_tokens(tokens);
   
   return 0;
 }
