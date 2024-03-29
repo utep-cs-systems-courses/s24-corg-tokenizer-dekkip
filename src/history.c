@@ -10,25 +10,29 @@ List *init_history(){
 
 void add_history(List *list, char *str){
 
-  Item* head = list->root;
-  if(head == NULL){
-    list->root = (Item*)malloc(sizeof(Item));
-    list->root->id = 0;
-    list->root->str = str;
-    list->root->next = NULL;
-    return;
-   }
+  if (list == NULL) return;
+  Item* newNode = (Item*)malloc(sizeof(Item));
+  
+  // copy the string to new memory location
+  newNode->str = strdup(str);
+  newNode->next = NULL;
 
-  while(head->next != NULL){
-    head = head->next;
+  if (list->root == NULL) {
+    list->root = newNode;
+    newNode->id = 1;
+    return;
   }
 
-  head->next = (Item*)malloc(sizeof(Item));
-  head->next->id = head->id+1;
-  head->next->str = str;
-  head->next->next = NULL;
-}
+  // find the last node
+  Item* lastNode = list->root;
+  while (lastNode->next != NULL) {
+    lastNode = lastNode->next;
+  }
 
+  lastNode->next = newNode;
+  newNode->id = lastNode->id + 1;
+}
+  
 char *get_history(List *list, int id){
   Item *head = list->root;
   
@@ -38,6 +42,7 @@ char *get_history(List *list, int id){
   
   while(head != NULL){
     if(head->id == id){
+      printf("%s\n", head->str);
       return head->str;
     }
     head = head->next;

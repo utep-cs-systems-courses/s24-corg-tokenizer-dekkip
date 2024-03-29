@@ -59,21 +59,20 @@ char *copy_str(char *inStr, short len){
 
 char **tokenize(char* str){
     int num_tokens = count_tokens(str);
-    //printf("num_tokens: %d\n", num_tokens);
+    printf("num_tokens: %d\n", num_tokens);
     
     char **tokens = (char**)malloc((num_tokens+1)*sizeof(char*));
     char *token = token_start(str);
     //printf("token: %c\n", *token);
     int i = 0;
     
-    while(*token != '\0'){
+    while(*token != '\0' && isalnum(*token)){
       char *terminator = token_terminator(token);
       size_t token_length = terminator - token;
       tokens[i] = copy_str(token, token_length);
       tokens[i][token_length] = '\0';
       i++;
-      // printf("token before: %c \n",*token);
-      //printf("tokens[i]: %s \n", *tokens[i]);
+      //printf("token before: %c \n",*token);
       token = token_start(terminator);
       //printf("token after: %c\n", *token);
     }
@@ -95,12 +94,8 @@ void print_tokens(char **tokens){
 }
 
 void free_tokens(char **tokens){
-  int i = 0;
-  char *token = tokens[i];
-  while(token){
+  for (int i = 0; tokens[i] != NULL; i++){
     free(tokens[i]);
-    i++;
-    token = tokens[i];
   }
-
+  free(tokens);
 }

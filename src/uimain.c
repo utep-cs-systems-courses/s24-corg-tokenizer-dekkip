@@ -13,7 +13,8 @@ int main(){
   while(userinput != 0){
     printf("Please enter an option: 1-input to tokenizer 2-history 3-lookup with id 0- quit\n");
     scanf("%d", &userinput);
-
+    getchar();
+    
     switch(userinput){
 
     case 1: //tokenizer + add to list
@@ -26,7 +27,7 @@ int main(){
       char** tokens = tokenize(string);
       printf("Successfully tokenized: \n");
       print_tokens(tokens);
-      //free_tokens(tokens);
+      free_tokens(tokens);
 
       add_history(historyList, string);
       printf("Successfully added to history! \n");
@@ -34,11 +35,11 @@ int main(){
 
     case 2: //print history
       print_history(historyList);
-      //free_history(historyList);
+      free_history(historyList);
       break;
 
-    case 3:
-      printf("Enter ID num of list item");
+    case 3: //get_history
+      printf("Enter ID num of list item: ");
       int getID = 0;
       scanf("%d", &getID);
 
